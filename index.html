@@ -9,8 +9,7 @@
             margin: 0;
             padding: 0;
             width: 100%;
-            height: 100%;
-            overflow: hidden;
+            height: auto;
             background-color: rgb(25, 25, 25);
             color: #fff;
             font-family: Arial, sans-serif;
@@ -20,7 +19,7 @@
             position: relative;
             z-index: 1;
             text-align: center;
-            margin-top: 10%;
+            margin-top: 5%;
         }
 
         .content h1 {
@@ -34,6 +33,21 @@
             max-width: 600px;
             margin: 0 auto;
             line-height: 1.5;
+        }
+
+        /* Search Bar */
+        .search-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .search-input {
+            padding: 10px;
+            font-size: 1rem;
+            width: 300px;
+            border-radius: 5px;
+            border: none;
+            margin-bottom: 10px;
         }
 
         /* Admin Controls */
@@ -78,7 +92,7 @@
         /* Post Styles */
         .post-container {
             max-width: 800px;
-            margin: 0 auto;
+            margin: 20px auto;
             background-color: rgba(255, 255, 255, 0.1);
             padding: 20px;
             border-radius: 5px;
@@ -110,6 +124,11 @@
     <div class="content">
         <h1>Welcome to Script Hub</h1>
         <p>Your ultimate destination for free scripts and tools. Explore and enhance your projects effortlessly!</p>
+        
+        <!-- Search Bar -->
+        <div class="search-container">
+            <input type="text" id="search-input" class="search-input" placeholder="Search for posts..." onkeyup="searchPosts()">
+        </div>
     </div>
 
     <!-- Admin Controls for Adding Post -->
@@ -125,15 +144,17 @@
         <button onclick="addPost()">Submit Post</button>
     </div>
 
+    <div id="posts-list"></div>
     <div id="post-container"></div>
 
     <script>
-        // Simulated list of posts
-        const posts = [];
+        // Load posts from localStorage (if any)
+        const posts = JSON.parse(localStorage.getItem('posts')) || [];
 
         // Simulated owner check (you can replace this with real authentication)
         const isOwner = true;
 
+        // Show admin controls only for the owner
         if (isOwner) {
             document.getElementById('admin-controls').style.display = 'block';
         }
@@ -155,14 +176,25 @@
                     tags: tags
                 };
                 posts.push(post);
-                loadPost(post.id);
+                localStorage.setItem('posts', JSON.stringify(posts));
+                displayPosts();
                 clearForm();
             } else {
                 alert('Please fill out all fields and add at least one tag.');
             }
         }
 
-        // Display the post content based on the URL hash
+        // Display all posts in the list
+        function displayPosts() {
+            const postsList = document.getElementById('posts-list');
+            postsList.innerHTML = posts.map(post => 
+                `<div>
+                    <a href="#post/${post.id}">${post.title}</a>
+                </div>`
+            ).join('');
+        }
+
+        // Function to load a post based on the URL hash
         function loadPost(postId) {
             const post = posts.find(p => p.id === postId);
             if (post) {
@@ -178,6 +210,18 @@
             } else {
                 document.getElementById('post-container').innerHTML = '<p>Post not found.</p>';
             }
+        }
+
+        // Function to handle search
+        function searchPosts() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const filteredPosts = posts.filter(post => post.title.toLowerCase().includes(query));
+            const postsList = document.getElementById('posts-list');
+            postsList.innerHTML = filteredPosts.map(post => 
+                `<div>
+                    <a href="#post/${post.id}">${post.title}</a>
+                </div>`
+            ).join('');
         }
 
         // Display the post based on the URL hash
@@ -200,11 +244,9 @@
         // Monitor changes in the URL hash
         window.addEventListener('hashchange', showPostFromHash);
 
-        // Display the first post or a default message
+        // Initial load of posts and post
+        displayPosts();
         showPostFromHash();
-
-        // Initialize the post list if needed
-        // e.g., posts.push(...)
 
     </script>
 </body>
