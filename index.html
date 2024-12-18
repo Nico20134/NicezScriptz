@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Script Hub</title>
+    <title>Falling Snow</title>
     <style>
         body, html {
             margin: 0;
@@ -39,8 +39,8 @@
 
     <!-- Main Content -->
     <div class="content">
-        <h1>Welcome to Script Hub</h1>
-        <p>Your go-to place for free scripts and tools!</p>
+        <h1>Snowfall Effect</h1>
+        <p>Enjoy the falling snow!</p>
     </div>
 
     <!-- Include particles.js -->
@@ -49,14 +49,14 @@
         particlesJS("particles-js", {
             "particles": {
                 "number": {
-                    "value": 100,
+                    "value": 150, /* Number of snowflakes */
                     "density": {
                         "enable": true,
                         "value_area": 800
                     }
                 },
                 "color": {
-                    "value": "#ffffff"
+                    "value": "#ffffff" /* White color for snowflakes */
                 },
                 "shape": {
                     "type": "circle",
@@ -66,17 +66,17 @@
                     }
                 },
                 "opacity": {
-                    "value": 0.7,
-                    "random": false
+                    "value": 0.8,
+                    "random": true
                 },
                 "size": {
-                    "value": 3,
-                    "random": true
+                    "value": 4,
+                    "random": true /* Random snowflake size */
                 },
                 "move": {
                     "enable": true,
-                    "speed": 3,
-                    "direction": "bottom", /* Falling effect */
+                    "speed": 2, /* Falling speed */
+                    "direction": "bottom", /* Snow falls downward */
                     "random": false,
                     "straight": false,
                     "out_mode": "out",
@@ -84,10 +84,13 @@
                 }
             },
             "interactivity": {
+                "detect_on": "canvas",
                 "events": {
                     "onhover": {
-                        "enable": true,
-                        "mode": "repulse"
+                        "enable": false
+                    },
+                    "onclick": {
+                        "enable": false
                     }
                 }
             },
