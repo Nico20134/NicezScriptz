@@ -118,12 +118,21 @@
         .admin-controls {
             margin-top: 20px;
             display: none;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 5px;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        .admin-controls input, .admin-controls textarea {
-            width: 300px;
+        .admin-controls h3 {
+            margin-bottom: 20px;
+        }
+
+        .admin-controls input, .admin-controls textarea, .admin-controls .tag-input {
+            width: 100%;
             padding: 10px;
-            margin: 10px;
+            margin: 10px 0;
             border-radius: 5px;
             border: 1px solid #fff;
             background-color: #333;
@@ -137,9 +146,28 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            margin-top: 10px;
         }
 
         .admin-controls button:hover {
+            background-color: #555;
+        }
+
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background-color: #444;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin: 5px;
+            font-size: 0.9rem;
+        }
+
+        .tag:hover {
             background-color: #555;
         }
     </style>
@@ -166,6 +194,10 @@
         <input type="text" id="script-name" placeholder="Script Name" />
         <input type="file" id="script-image" accept="image/*" />
         <textarea id="script-content" placeholder="Paste the script here..."></textarea>
+
+        <h4>Tags (comma separated):</h4>
+        <input type="text" id="script-tags" class="tag-input" placeholder="e.g., JavaScript, Python" />
+
         <button onclick="addScript()">Submit Script</button>
     </div>
 
@@ -187,6 +219,7 @@
                     `<div class="result-item">
                         <h3>${script.title}</h3>
                         <p>${script.content}</p>
+                        <div class="tags-container">${script.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}</div>
                     </div>`
                 ).join('');
                 resultsContainer.style.display = 'block';
@@ -199,16 +232,21 @@
             const name = document.getElementById('script-name').value;
             const image = document.getElementById('script-image').files[0];
             const content = document.getElementById('script-content').value;
+            const tagsInput = document.getElementById('script-tags').value;
+            const tags = tagsInput.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0);
 
-            if (name && image && content) {
+            if (name && image && content && tags.length > 0) {
                 const script = {
                     title: name,
                     image: URL.createObjectURL(image),
-                    content: content
+                    content: content,
+                    tags: tags
                 };
                 forumScripts.push(script);
                 displayForum();
                 clearForm();
+            } else {
+                alert('Please fill out all fields and add at least one tag.');
             }
         }
 
@@ -219,6 +257,7 @@
                     <img src="${script.image}" alt="User Image" />
                     <h3>${script.title}</h3>
                     <p>${script.content}</p>
+                    <div class="tags-container">${script.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}</div>
                     <button class="copy-btn" onclick="copyScript('${script.content}')">Copy Script</button>
                 </div>`
             ).join('');
@@ -234,6 +273,7 @@
             document.getElementById('script-name').value = '';
             document.getElementById('script-image').value = '';
             document.getElementById('script-content').value = '';
+            document.getElementById('script-tags').value = '';
         }
 
         displayForum();
