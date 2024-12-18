@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nicez Scripts</title>
+    <title>Script Hub</title>
     <style>
         /* Reset body and ensure full screen */
         body, html {
@@ -63,12 +63,80 @@
         .result-item {
             margin-bottom: 10px;
         }
+
+        /* Forum Section */
+        .forum-container {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+        }
+
+        .forum-item {
+            margin-bottom: 20px;
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .forum-item h3 {
+            margin-top: 0;
+        }
+
+        .forum-item img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+
+        .forum-item .copy-btn {
+            background-color: #333;
+            color: #fff;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .forum-item .copy-btn:hover {
+            background-color: #555;
+        }
+
+        /* Admin-only controls */
+        .admin-controls {
+            margin-top: 20px;
+            display: none; /* Initially hidden */
+        }
+
+        .admin-controls input, .admin-controls textarea {
+            width: 300px;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            border: 1px solid #fff;
+            background-color: #333;
+            color: #fff;
+        }
+
+        .admin-controls button {
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .admin-controls button:hover {
+            background-color: #555;
+        }
     </style>
 </head>
 <body>
     <!-- Main Content for Script Hub -->
     <div class="content">
-        <h1>Welcome to Nicez Scriptz</h1>
+        <h1>Welcome to Script Hub</h1>
         <p>Your ultimate destination for free scripts and tools. Explore and enhance your projects effortlessly!</p>
 
         <!-- Search Bar -->
@@ -80,20 +148,37 @@
         <div id="search-results" class="search-results" style="display: none;"></div>
     </div>
 
-    <script>
-        // Simulated list of script titles (you can replace this with actual content)
-        const scripts = [
-            { title: 'JavaScript Basics', content: 'Learn the fundamentals of JavaScript.' },
-            { title: 'HTML for Beginners', content: 'A comprehensive guide to HTML.' },
-            { title: 'CSS Styling Tips', content: 'Advanced CSS techniques for better design.' },
-            { title: 'Python Tutorial', content: 'Introduction to Python programming.' },
-            { title: 'React.js Guide', content: 'Master React with this detailed tutorial.' }
-        ];
+    <!-- Forum Section -->
+    <div class="forum-container">
+        <h2>Script Forum</h2>
+        <div id="forum-list"></div>
+    </div>
 
-        // Function to search scripts
+    <!-- Admin Controls for Adding Script -->
+    <div class="admin-controls" id="admin-controls">
+        <h3>Admin: Add a New Script</h3>
+        <input type="text" id="script-name" placeholder="Script Name" />
+        <input type="file" id="script-image" accept="image/*" />
+        <textarea id="script-content" placeholder="Paste the script here..."></textarea>
+        <button onclick="addScript()">Submit Script</button>
+    </div>
+
+    <script>
+        // Simulated list of scripts (used in the forum)
+        const forumScripts = [];
+
+        // Simulated owner check (you can replace this with real authentication)
+        const isOwner = true;  // Change to `false` to simulate a non-owner
+
+        // Show admin controls only for the owner
+        if (isOwner) {
+            document.getElementById('admin-controls').style.display = 'block';
+        }
+
+        // Function to search scripts (you can replace this with actual search logic)
         function searchScripts() {
             const query = document.getElementById('search-input').value.toLowerCase();
-            const results = scripts.filter(script => script.title.toLowerCase().includes(query) || script.content.toLowerCase().includes(query));
+            const results = forumScripts.filter(script => script.title.toLowerCase().includes(query));
 
             const resultsContainer = document.getElementById('search-results');
             if (results.length > 0) {
@@ -108,6 +193,54 @@
                 resultsContainer.style.display = 'none';
             }
         }
+
+        // Add a new script (only for the admin)
+        function addScript() {
+            const name = document.getElementById('script-name').value;
+            const image = document.getElementById('script-image').files[0];
+            const content = document.getElementById('script-content').value;
+
+            if (name && image && content) {
+                const script = {
+                    title: name,
+                    image: URL.createObjectURL(image),
+                    content: content
+                };
+                forumScripts.push(script);
+                displayForum();
+                clearForm();
+            }
+        }
+
+        // Display forum scripts
+        function displayForum() {
+            const forumList = document.getElementById('forum-list');
+            forumList.innerHTML = forumScripts.map(script => 
+                `<div class="forum-item">
+                    <img src="${script.image}" alt="User Image" />
+                    <h3>${script.title}</h3>
+                    <p>${script.content}</p>
+                    <button class="copy-btn" onclick="copyScript('${script.content}')">Copy Script</button>
+                </div>`
+            ).join('');
+        }
+
+        // Copy the script to clipboard
+        function copyScript(scriptContent) {
+            navigator.clipboard.writeText(scriptContent)
+                .then(() => alert('Script copied to clipboard!'))
+                .catch(err => alert('Failed to copy script: ' + err));
+        }
+
+        // Clear the form after submission
+        function clearForm() {
+            document.getElementById('script-name').value = '';
+            document.getElementById('script-image').value = '';
+            document.getElementById('script-content').value = '';
+        }
+
+        // Display the forum on page load
+        displayForum();
     </script>
 </body>
 </html>
