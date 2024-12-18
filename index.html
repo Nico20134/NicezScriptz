@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Falling Snow</title>
+    <title>Script Hub</title>
     <style>
+        /* Reset body and ensure full screen */
         body, html {
             margin: 0;
             padding: 0;
@@ -12,8 +13,11 @@
             height: 100%;
             overflow: hidden;
             background-color: #000; /* Black background */
+            color: #fff; /* White text */
+            font-family: Arial, sans-serif;
         }
 
+        /* Particles container */
         #particles-js {
             position: absolute;
             width: 100%;
@@ -23,75 +27,78 @@
             z-index: -1;
         }
 
+        /* Main content */
         .content {
             position: relative;
             z-index: 1;
-            color: white;
             text-align: center;
-            margin-top: 20%;
-            font-family: Arial, sans-serif;
+            margin-top: 15%;
+        }
+
+        .content h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .content p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.5;
         }
     </style>
 </head>
 <body>
-    <!-- Particles Container -->
+    <!-- Particles Background -->
     <div id="particles-js"></div>
 
-    <!-- Main Content -->
+    <!-- Main Content for Script Hub -->
     <div class="content">
-        <h1>Snowfall Effect</h1>
-        <p>Enjoy the falling snow!</p>
+        <h1>Welcome to Script Hub</h1>
+        <p>Your ultimate destination for free scripts and tools. Explore and enhance your projects effortlessly!</p>
     </div>
 
     <!-- Include particles.js -->
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
+        /* Snowfall Effect */
         particlesJS("particles-js", {
             "particles": {
                 "number": {
-                    "value": 150, /* Number of snowflakes */
+                    "value": 150, /* Number of particles */
                     "density": {
                         "enable": true,
                         "value_area": 800
                     }
                 },
                 "color": {
-                    "value": "#ffffff" /* White color for snowflakes */
+                    "value": "#ffffff" /* Snowflakes are white */
                 },
                 "shape": {
-                    "type": "circle",
-                    "stroke": {
-                        "width": 0,
-                        "color": "#000000"
-                    }
+                    "type": "circle"
                 },
                 "opacity": {
-                    "value": 0.8,
+                    "value": 0.7,
                     "random": true
                 },
                 "size": {
-                    "value": 4,
-                    "random": true /* Random snowflake size */
+                    "value": 3,
+                    "random": true /* Varying snowflake sizes */
                 },
                 "move": {
                     "enable": true,
-                    "speed": 2, /* Falling speed */
-                    "direction": "bottom", /* Snow falls downward */
+                    "speed": 2, /* Snowfall speed */
+                    "direction": "bottom", /* Falling downward */
                     "random": false,
                     "straight": false,
-                    "out_mode": "out",
-                    "bounce": false
+                    "out_mode": "out"
                 }
             },
             "interactivity": {
-                "detect_on": "canvas",
                 "events": {
-                    "onhover": {
-                        "enable": false
-                    },
-                    "onclick": {
-                        "enable": false
-                    }
+                    "onhover": { "enable": false },
+                    "onclick": { "enable": false }
                 }
             },
             "retina_detect": true
