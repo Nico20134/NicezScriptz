@@ -11,9 +11,7 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            font-family: Arial, sans-serif;
-            color: white;
-            text-align: center;
+            background-color: #000; /* Black background */
         }
 
         #particles-js {
@@ -22,36 +20,27 @@
             height: 100%;
             top: 0;
             left: 0;
-            z-index: -1; /* Send particles to the background */
+            z-index: -1;
         }
 
-        .container {
+        .content {
             position: relative;
-            z-index: 1; /* Bring content above particles */
-            background-color: rgba(0, 0, 0, 0.8);
-            padding: 20px;
-            margin: 50px auto;
-            max-width: 600px;
-            border-radius: 10px;
-            border: 1px solid #444;
-        }
-
-        a {
-            color: #00ffff;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
+            z-index: 1;
+            color: white;
+            text-align: center;
+            margin-top: 20%;
+            font-family: Arial, sans-serif;
         }
     </style>
 </head>
 <body>
+    <!-- Particles Container -->
     <div id="particles-js"></div>
-    <div class="container">
+
+    <!-- Main Content -->
+    <div class="content">
         <h1>Welcome to Script Hub</h1>
         <p>Your go-to place for free scripts and tools!</p>
-        <a href="#scripts">Explore Scripts</a>
     </div>
 
     <!-- Include particles.js -->
@@ -60,7 +49,7 @@
         particlesJS("particles-js", {
             "particles": {
                 "number": {
-                    "value": 80,
+                    "value": 100,
                     "density": {
                         "enable": true,
                         "value_area": 800
@@ -74,89 +63,31 @@
                     "stroke": {
                         "width": 0,
                         "color": "#000000"
-                    },
-                    "polygon": {
-                        "nb_sides": 5
                     }
                 },
                 "opacity": {
-                    "value": 0.5,
-                    "random": false,
-                    "anim": {
-                        "enable": false,
-                        "speed": 1,
-                        "opacity_min": 0.1,
-                        "sync": false
-                    }
+                    "value": 0.7,
+                    "random": false
                 },
                 "size": {
                     "value": 3,
-                    "random": true,
-                    "anim": {
-                        "enable": false,
-                        "speed": 40,
-                        "size_min": 0.1,
-                        "sync": false
-                    }
-                },
-                "line_linked": {
-                    "enable": true,
-                    "distance": 150,
-                    "color": "#ffffff",
-                    "opacity": 0.4,
-                    "width": 1
+                    "random": true
                 },
                 "move": {
                     "enable": true,
-                    "speed": 6,
-                    "direction": "none",
+                    "speed": 3,
+                    "direction": "bottom", /* Falling effect */
                     "random": false,
                     "straight": false,
                     "out_mode": "out",
-                    "bounce": false,
-                    "attract": {
-                        "enable": false,
-                        "rotateX": 600,
-                        "rotateY": 1200
-                    }
+                    "bounce": false
                 }
             },
             "interactivity": {
-                "detect_on": "canvas",
                 "events": {
                     "onhover": {
                         "enable": true,
-                        "mode": "grab"
-                    },
-                    "onclick": {
-                        "enable": true,
-                        "mode": "push"
-                    },
-                    "resize": true
-                },
-                "modes": {
-                    "grab": {
-                        "distance": 140,
-                        "line_linked": {
-                            "opacity": 1
-                        }
-                    },
-                    "bubble": {
-                        "distance": 400,
-                        "size": 40,
-                        "duration": 2,
-                        "opacity": 8,
-                        "speed": 3
-                    },
-                    "repulse": {
-                        "distance": 200,
-                        "duration": 0.4
-                    },
-                    "push": {
-                        "particles_nb": 4
-                    },
-                    "remove": {
-                        "particles_nb": 2
+                        "mode": "repulse"
                     }
                 }
             },
